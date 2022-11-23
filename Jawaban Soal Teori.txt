@@ -1,0 +1,18 @@
+Unit Kompetensi: Menggunakan Struktur Data
+1. Untuk projek kali ini, saya menggunakan struktur data Array biasa, karena memang sangat umum dan mudah digunakan. Untuk alterntif saya bisa menggunakan Collection / Sequence.
+
+Kelebihan Collection:
+- Meng-cover fungsionalitas seperti foreach, echo, serialize, size, var_dump dsb.
+
+Kekurangan Collection:
+- Sintaks lebih panjang jika dibandingkan dengan array biasa.
+
+Kelebihan Sequence:
+- Terindeks seperti array, menggunakan indeks integer dari 0 s/d size-1
+
+Kekurangan Sequnce:
+- Hanya diperbolehkan untuk mengakses nilai berdasarkan indeksnya
+
+2. 
+
+3. 
