@@ -57,6 +57,7 @@ class MUser extends CI_Model
                 'email' => $data['email'],
                 'nama_lengkap'	=> $data['nama_lengkap'],
                 'password' => md5($data['pass']),
+                'uuid' => guidv4()
                 // 'role' => 2 // Sebagai user biasa.
             ]);
         return [
