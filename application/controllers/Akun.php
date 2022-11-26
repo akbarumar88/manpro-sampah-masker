@@ -43,8 +43,8 @@ class Akun extends CI_Controller
     {
         $cari = $this->input->get('cari');
         $page = $this->input->get('page') || 1;
-        $tglawal = $this->input->get('tglawal') ? $this->input->get('tglawal') : date('Y-m-d 00:00:00');
-        $tglakhir = $this->input->get('tglakhir') ? $this->input->get('tglakhir') : date('Y-m-d 23:59:59');
+        $tglawal = $this->input->get('tglawal') ? $this->input->get('tglawal') : date('Y-m-d');
+        $tglakhir = $this->input->get('tglakhir') ? $this->input->get('tglakhir') : date('Y-m-d');
         // dd($page); return;
 
         $mutasi = $this->mutasi->get([

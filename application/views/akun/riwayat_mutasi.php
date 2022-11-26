@@ -8,7 +8,26 @@
 
 <h3 class="mb-4">Riwayat Mutasi</h3>
 
-<div class="table-responsive">
+<!-- Filter View -->
+<form class="row gy-2 gx-3 align-items-center" id="filter">
+    <div class="col-auto">
+        <label class="visually-hidden" for="autoSizingInput">Cari Keterangan</label>
+        <input name="cari" type="text" class="form-control" id="autoSizingInput" value="<?= $this->input->get("cari") ?>" placeholder="Cari Keterangan">
+    </div>
+    <div class="col-auto">
+        <label class="visually-hidden" for="tglawal">Tanggal Awal</label>
+        <input type="date" name="tglawal" id="tglawal" value="<?= $this->input->get("tglawal") ?>" class="form-control">
+    </div>
+    <div class="col-auto">
+        <label class="visually-hidden" for="tglakhir">Tanggal Akhir</label>
+        <input type="date" name="tglakhir" id="tglakhir" value="<?= $this->input->get("tglakhir") ?>" class="form-control">
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+
+<div class="table-responsive mt-4">
     <table class="table">
         <thead class="table-light">
             <tr>
@@ -32,3 +51,34 @@
         </tbody>
     </table>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#filter').submit(function(e) {
+            let tglawal = $('#tglawal').val()
+            let tglakhir = $('#tglakhir').val()
+            console.log({
+                tglawal,
+                tglakhir
+            })
+
+            if (tglawal > tglakhir) {
+                alert("Tanggal awal tidak boleh melebihi tanggal akhir")
+                e.preventDefault()
+            }
+
+            var a = moment(tglawal);
+            var b = moment(tglakhir);
+            let diff = Math.abs(a.diff(b, 'days')) // 1
+
+            console.log({
+                diff
+            })
+            if (diff > 30) {
+                alert("Jangkauan filter tanggal maksimal 30 hari")
+                e.preventDefault()
+            }
+            // e.preventDefault()
+        })
+    })
+</script>
