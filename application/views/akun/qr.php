@@ -7,4 +7,6 @@
 
 
 <h3 class="mb-4">QR Code, <?= $this->session->nama_lengkap ?></h3>
-<img src="<?= base_url("img/qr_code/{$user['uuid']}.png") ?>" alt="">
+<div style="">
+    <img style="margin-left: -16px" src="<?= base_url("img/qr_code/{$user['uuid']}.png") ?>" alt="">
+</div>
