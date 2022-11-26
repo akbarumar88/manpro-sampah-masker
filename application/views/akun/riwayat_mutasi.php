@@ -84,7 +84,6 @@ $isNextDisabled = $page == $pageCount ? 'disabled' : '';
             ]);
             $href = $page == $i ? '#' : base_url("akun/riwayat_mutasi?$queryParam");
         ?>
-
             <li class="page-item <?= $isActive ?>"><a class="page-link" href="<?= $href ?>"><?= $i ?></a></li>
         <?php endfor ?>
         <li class="page-item <?= $isNextDisabled ?>">
