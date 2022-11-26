@@ -1,6 +1,8 @@
 <?php // echo md5('admin'); 
 ?>
 <?php //dd($_SESSION); 
+$page = $this->input->get('page');
+$offset = ($page - 1) * 15;
 ?>
 <?php flash('welcome') ?>
 <?php flash('access') ?>
@@ -41,16 +43,54 @@
         <tbody>
             <?php foreach ($mutasi as $i => $mut) : ?>
                 <tr>
-                    <td><?= $i + 1 ?></td>
+                    <td><?= $offset + ($i + 1) ?></td>
                     <td><?= $mut['keterangan'] ?></td>
                     <td><?= $mut['tgl'] ?></td>
                     <td><?= number_format($mut['kredit']) ?></td>
                     <td><?= number_format($mut['debit']) ?></td>
                 </tr>
-            <?php endforeach ?>
+            <?php endforeach; ?>
         </tbody>
     </table>
 </div>
+
+<?php if (empty($mutasi)) : ?>
+    <p class="text-center">Tidak ada data</p>
+<?php endif ?>
+
+<?php
+
+$pageCount = ceil($count / 15);
+// dd($pageCount);
+
+$isPrevDisabled = $page == 1 ? 'disabled' : '';
+$isNextDisabled = $page == $pageCount ? 'disabled' : '';
+
+?>
+
+<nav aria-label="...">
+    <ul class="pagination">
+        <li class="page-item <?= $isPrevDisabled ?>">
+            <a class="page-link">Previous</a>
+        </li>
+        <?php
+        for ($i = 1; $i <= $pageCount; $i++) :
+            $isActive = $page == $i ? 'active' : '';
+            $queryParam = http_build_query([
+                'tglawal' => $this->input->get('tglawal'),
+                'tglakhir' => $this->input->get('tglakhir'),
+                'cari' => $this->input->get('cari'),
+                'page' => $i,
+            ]);
+        ?>
+
+            <li class="page-item <?= $isActive ?>"><a class="page-link" href="<?= base_url("akun/riwayat_mutasi?$queryParam") ?>"><?= $i ?></a></li>
+        <?php endfor ?>
+        <li class="page-item <?= $isNextDisabled ?>">
+            <a class="page-link" href="#">Next</a>
+        </li>
+    </ul>
+</nav>
 
 <script type="text/javascript">
     $(document).ready(function() {
