@@ -7,3 +7,5 @@
 
 
 <h3 class="mb-4">Selamat Datang, <?= $this->session->nama_lengkap ?></h3>
+
+<h1>Menambahkan Sesuatu</h1>
