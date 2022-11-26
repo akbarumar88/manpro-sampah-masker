@@ -14,7 +14,7 @@ class MUser extends CI_Model
             ->db
             ->get_where('user', [
                 'username' => $username,
-                'password'	=> md5($pass)
+                'password'    => md5($pass)
             ])
             ->row_array();
         return $user;
@@ -30,7 +30,7 @@ class MUser extends CI_Model
             ->row_array();
         if (!empty($user)) {
             // Username sudah dipakai
-            return[
+            return [
                 'status' => 0,
                 'message' => "Username sudah dipakai, silakan menggunakan username yang lainnya."
             ];
@@ -44,7 +44,7 @@ class MUser extends CI_Model
             ->row_array();
         if (!empty($user)) {
             // email sudah dipakai
-            return[
+            return [
                 'status' => 0,
                 'message' => "Email sudah dipakai, silakan menggunakan email yang lainnya."
             ];
@@ -55,7 +55,7 @@ class MUser extends CI_Model
             ->insert('user', [
                 'username' => $data['username'],
                 'email' => $data['email'],
-                'nama_lengkap'	=> $data['nama_lengkap'],
+                'nama_lengkap'    => $data['nama_lengkap'],
                 'password' => md5($data['pass']),
                 'uuid' => $data['uuid'],
                 // 'role' => 2 // Sebagai user biasa.
