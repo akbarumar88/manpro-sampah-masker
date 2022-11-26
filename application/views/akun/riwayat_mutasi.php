@@ -82,9 +82,10 @@ $isNextDisabled = $page == $pageCount ? 'disabled' : '';
                 'cari' => $this->input->get('cari'),
                 'page' => $i,
             ]);
+            $href = $page == $i ? '#' : base_url("akun/riwayat_mutasi?$queryParam");
         ?>
 
-            <li class="page-item <?= $isActive ?>"><a class="page-link" href="<?= base_url("akun/riwayat_mutasi?$queryParam") ?>"><?= $i ?></a></li>
+            <li class="page-item <?= $isActive ?>"><a class="page-link" href="<?= $href ?>"><?= $i ?></a></li>
         <?php endfor ?>
         <li class="page-item <?= $isNextDisabled ?>">
             <a class="page-link" href="#">Next</a>
