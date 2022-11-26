@@ -6,7 +6,7 @@ class Akun extends CI_Controller
     {
         parent::__construct();
         $this->load->model('MUser', 'user');
-        // $this->load->model('MBarang', 'barang');
+        $this->load->model('MMutasi', 'mutasi');
         // $this->load->model('MKategori', 'kategori');
         // Pengecekan Hak Akses, jika bukan admin
         if (!$this->session->has_userdata('id')) {
@@ -37,5 +37,28 @@ class Akun extends CI_Controller
         $uid = $this->session->id;
         $user = $this->user->find($uid);
         $this->loadView('akun/qr', ['user' => $user]);
+    }
+
+    public function riwayat_mutasi()
+    {
+        $cari = $this->input->get('cari');
+        $page = $this->input->get('page') || 1;
+        $tglawal = $this->input->get('tglawal') ? $this->input->get('tglawal') : date('Y-m-d 00:00:00');
+        $tglakhir = $this->input->get('tglakhir') ? $this->input->get('tglakhir') : date('Y-m-d 23:59:59');
+        // dd($page); return;
+
+        $mutasi = $this->mutasi->get([
+            'iduser' => $this->session->id,
+            'cari'    => $cari,
+            'page' => $page,
+            'tglawal' => $tglawal,
+            'tglakhir' => $tglakhir,
+        ]);
+        // dd($mutasi);
+        // return;
+        $params = [
+            'mutasi'    => $mutasi,
+        ];
+        $this->loadView('akun/riwayat_mutasi.php', $params);
     }
 }

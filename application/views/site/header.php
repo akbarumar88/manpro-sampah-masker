@@ -39,7 +39,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-">
                                 <li><a class="dropdown-item" href="<?= base_url("akun/qr") ?>">QR Code</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="<?= base_url("akun/riwayat_mutasi") ?>">Riwayat Mutasi</a></li>
                                 <li><a class="dropdown-item" href="#">Something else here</a></li>
                             </ul>
                         </li>
