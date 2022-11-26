@@ -23,7 +23,7 @@
         <input type="date" name="tglakhir" id="tglakhir" value="<?= $this->input->get("tglakhir") ?>" class="form-control">
     </div>
     <div class="col-auto">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-success">Submit</button>
     </div>
 </form>
 
