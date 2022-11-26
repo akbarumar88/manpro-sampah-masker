@@ -66,6 +66,18 @@ class MUser extends CI_Model
         ];
     }
 
+    public function find($id)
+    {
+        $user = $this
+            ->db
+            ->get_where('user', [
+                'id' => $id
+            ])
+            ->row_array();
+        // dd($user); return;
+        return $user;
+    }
+
     public function addhistory($data)
     {
         $dataHis = $this->db->get_where('user_histori', [
