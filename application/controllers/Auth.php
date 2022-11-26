@@ -72,12 +72,34 @@ class Auth extends CI_Controller
         $nama_lengkap = $this->input->post('nama_lengkap');
         $pass = $this->input->post('pass');
         $email = $this->input->post('email');
+
+        // Generate QR-Code
+        $this->load->library('ciqrcode'); //pemanggilan library QR CODE
+        $config['cacheable']    = true; //boolean, the default is true
+        $config['cachedir']     = './img/'; //string, the default is application/cache/
+        $config['errorlog']     = './img/'; //string, the default is application/logs/
+        $config['imagedir']     = './img/qr_code/'; //direktori penyimpanan qr code
+        $config['quality']      = true; //boolean, the default is true
+        $config['size']         = 1024; //interger, the default is 1024
+        $this->ciqrcode->initialize($config);
+
+        $uuid = guidv4();
+        $image_name = $uuid . '.png'; //buat name dari qr code sesuai dengan uuid
+
+        $params['data'] = $uuid; //data yang akan di jadikan QR CODE
+        $params['level'] = 'H'; //H=High
+        $params['size'] = 10;
+        $params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder img/qr_code/
+        $this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
+
         // dd([$uname,$pass]);
+
         $res = $this->user->register([
             'username' => $uname,
             'pass' => $pass,
             'nama_lengkap' => $nama_lengkap,
             'email' => $email,
+            'uuid' => $uuid,
         ]);
         // dd($res);return;
         if ($res['status'] == 0) {
