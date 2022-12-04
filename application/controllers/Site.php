@@ -33,7 +33,11 @@ class Site extends CI_Controller
         // $recently_added = $this->barang->recently_added(); // Mengambil data film yang baru ditambahkan.
         // dd($recently_added);
         // Menampilkan view index dengan mempassing 2 data film tadi.
-        $this->loadView('site/index', []);
+        $iduser = $this->session->id;
+        $saldo = $this->user->getSaldo($iduser);
+        $this->loadView('site/index', [
+            'saldo' => $saldo
+        ]);
     }
 
     public function search()
