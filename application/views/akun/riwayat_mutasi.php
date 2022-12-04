@@ -2,6 +2,7 @@
 ?>
 <?php //dd($_SESSION); 
 $page = $this->input->get('page');
+if (empty($page)) $page = 1;
 $offset = ($page - 1) * 15;
 ?>
 <?php flash('welcome') ?>
