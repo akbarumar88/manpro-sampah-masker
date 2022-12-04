@@ -42,10 +42,9 @@ class Akun extends CI_Controller
     public function riwayat_mutasi()
     {
         $cari = $this->input->get('cari');
-        $page = $this->input->get('page') || 1;
-        $tglawal = $this->input->get('tglawal') ? $this->input->get('tglawal') : date('Y-m-d 00:00:00');
-        $tglakhir = $this->input->get('tglakhir') ? $this->input->get('tglakhir') : date('Y-m-d 23:59:59');
-        // dd($page); return;
+        $page = $this->input->get('page') ? $this->input->get('page') : 1;
+        $tglawal = $this->input->get('tglawal') ? $this->input->get('tglawal') : date('Y-m-d');
+        $tglakhir = $this->input->get('tglakhir') ? $this->input->get('tglakhir') : date('Y-m-d');
 
         $mutasi = $this->mutasi->get([
             'iduser' => $this->session->id,
@@ -57,7 +56,8 @@ class Akun extends CI_Controller
         // dd($mutasi);
         // return;
         $params = [
-            'mutasi'    => $mutasi,
+            'mutasi'    => $mutasi['data'],
+            'count'	=> $mutasi['count'],
         ];
         $this->loadView('akun/riwayat_mutasi.php', $params);
     }
