@@ -9,6 +9,10 @@ class Site extends CI_Controller
         $this->load->model('MKategori', 'kategori');
         $this->load->model('MUser', 'user');
         $this->load->model('MPesanan', 'pesanan');
+
+        if (!$this->session->has_userdata('id')) {
+            return redirect('auth/login');
+        }
     }
 
     private function loadView($mainView, $data = [])
@@ -16,10 +20,6 @@ class Site extends CI_Controller
         // $genres = $this->barang->genres();
         // $kategori = $this->barang->kategori();
         // dd($genres);
-
-        if (!$this->session->has_userdata('id')) {
-            return redirect('auth/login');
-        }
 
         $this->load->view('site/header', []);
         $this->load->view($mainView, $data);
@@ -34,6 +34,7 @@ class Site extends CI_Controller
         // dd($recently_added);
         // Menampilkan view index dengan mempassing 2 data film tadi.
         $iduser = $this->session->id;
+        // dd($this->session);
         $saldo = $this->user->getSaldo($iduser);
         $this->loadView('site/index', [
             'saldo' => $saldo

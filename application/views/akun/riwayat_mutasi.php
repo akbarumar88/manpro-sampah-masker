@@ -11,6 +11,9 @@ $offset = ($page - 1) * 15;
 
 <h3 class="mb-4">Riwayat Mutasi</h3>
 
+<h6 class="">Sisa Saldo</h6>
+<h4 class="mb-4 fw-semibold">Rp<?= number_format($saldo) ?></h4>
+
 <!-- Filter View -->
 <form class="row gy-2 gx-3 align-items-center" id="filter">
     <div class="col-auto">
