@@ -78,6 +78,15 @@ class MUser extends CI_Model
         return $user;
     }
 
+    public function getSaldo($iduser)
+    {
+        $data = $this
+            ->db
+            ->query("SELECT SUM(kredit-debit) as saldo FROM mutasi WHERE iduser=$iduser")
+            ->row_array();
+        return ($data['saldo']);
+    }
+
     public function addhistory($data)
     {
         $dataHis = $this->db->get_where('user_histori', [
