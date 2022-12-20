@@ -81,4 +81,28 @@ class Admin extends CI_Controller
         flash('succinput', "Berhasil input data.", "success");
         redirect('admin/input');
     }
+
+    public function profil()
+    {
+        $id = $this->session->id_admin;
+        $admin = $this->admin->find($id);
+
+        if (!$this->input->post()) {
+            return $this->loadViewAdmin('admin/profil', [
+                'admin' => $admin
+            ]);
+        }
+
+        // Submit Form
+        $params = [
+            'id' => $id,
+            'username' => $this->input->post('username'),
+            'nama_lengkap' => $this->input->post('nama_lengkap'),
+            'email' => $this->input->post('email'),
+        ];
+        $this->admin->update($params);
+
+        flash('succregister', "Berhasil update profil.", "success");
+        redirect('admin/profil');
+    }
 }

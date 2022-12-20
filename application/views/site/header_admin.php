@@ -36,6 +36,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-">
                                 <li><a class="dropdown-item" href="<?= base_url("admin/input") ?>">Input Data</a></li>
+                                <li><a class="dropdown-item" href="<?= base_url("admin/profil") ?>">Profil</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">

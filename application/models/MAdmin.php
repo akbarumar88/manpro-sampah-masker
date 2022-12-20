@@ -78,6 +78,14 @@ class MAdmin extends CI_Model
         return $admin;
     }
 
+    public function update($data)
+    {
+        return $this
+            ->db
+            ->where('id', $data['id'])
+            ->update('admin', $data);
+    }
+
     public function getSaldo($iduser)
     {
         $data = $this
