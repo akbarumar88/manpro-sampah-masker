@@ -1,6 +1,6 @@
 <?php
 
-class MUser extends CI_Model
+class MAdmin extends CI_Model
 {
 
     function __construct()
@@ -10,25 +10,25 @@ class MUser extends CI_Model
 
     public function login($username, $pass)
     {
-        $user = $this
+        $admin = $this
             ->db
-            ->get_where('user', [
+            ->get_where('admin', [
                 'username' => $username,
                 'password'    => md5($pass)
             ])
             ->row_array();
-        return $user;
+        return $admin;
     }
 
     public function register($data)
     {
-        $user = $this
+        $admin = $this
             ->db
-            ->get_where('user', [
+            ->get_where('admin', [
                 'username' => $data['username'],
             ])
             ->row_array();
-        if (!empty($user)) {
+        if (!empty($admin)) {
             // Username sudah dipakai
             return [
                 'status' => 0,
@@ -36,13 +36,13 @@ class MUser extends CI_Model
             ];
         }
 
-        $user = $this
+        $admin = $this
             ->db
-            ->get_where('user', [
+            ->get_where('admin', [
                 'email' => $data['email'],
             ])
             ->row_array();
-        if (!empty($user)) {
+        if (!empty($admin)) {
             // email sudah dipakai
             return [
                 'status' => 0,
@@ -52,13 +52,13 @@ class MUser extends CI_Model
         // Eksekusi register
         $this
             ->db
-            ->insert('user', [
+            ->insert('admin', [
                 'username' => $data['username'],
                 'email' => $data['email'],
                 'nama_lengkap'    => $data['nama_lengkap'],
                 'password' => md5($data['pass']),
                 'uuid' => $data['uuid'],
-                // 'role' => 2 // Sebagai user biasa.
+                // 'role' => 2 // Sebagai admin biasa.
             ]);
         return [
             'status' => 1,
@@ -68,26 +68,14 @@ class MUser extends CI_Model
 
     public function find($id)
     {
-        $user = $this
+        $admin = $this
             ->db
-            ->get_where('user', [
+            ->get_where('admin', [
                 'id' => $id
             ])
             ->row_array();
-        // dd($user); return;
-        return $user;
-    }
-
-    public function findByUUID($uuid)
-    {
-        $user = $this
-            ->db
-            ->get_where('user', [
-                'uuid' => $uuid
-            ])
-            ->row_array();
-        // dd($user); return;
-        return $user;
+        // dd($admin); return;
+        return $admin;
     }
 
     public function getSaldo($iduser)

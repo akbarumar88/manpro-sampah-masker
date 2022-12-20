@@ -6,7 +6,9 @@ class Auth extends CI_Controller
     {
         parent::__construct();
         $this->load->model('MUser', 'user');
+        $this->load->model('MAdmin', 'admin');
         $this->load->model('MBarang', 'barang');
+        $this->load->model('MLog', 'mlog');
     }
 
     private function loadView($mainView, $data = [])
@@ -16,6 +18,15 @@ class Auth extends CI_Controller
         $this->load->view('site/header', [
             'genres' => $genres
         ]);
+        $this->load->view($mainView, $data);
+        $this->load->view('site/footer');
+    }
+
+    private function loadViewAdmin($mainView, $data = [])
+    {
+        $genres = [];
+        // dd($genres);
+        $this->load->view('site/header_admin', []);
         $this->load->view($mainView, $data);
         $this->load->view('site/footer');
     }
@@ -54,6 +65,50 @@ class Auth extends CI_Controller
         // Jika user admin maka langsung diarahkan ke web admin, jika user biasa maka diarahkan ke Home.
         $redirect_route = $user['role'] == 1 ? 'admin/index' : 'site/index';
         redirect($redirect_route);
+    }
+
+    public function login_admin()
+    {
+        // dd($this->session);
+        // return;
+        // Jika user telah login, maka arahkan ke halaman index.
+        if ($this->session->has_userdata('id_admin')) {
+            return redirect('admin/index');
+        }
+
+        if (!$this->input->post()) {
+            // Menampilkan view login user.
+            return $this->loadViewAdmin('admin/login');
+        }
+        // Jika user sudah submit form, maka melakukan login.
+        $uname = $this->input->post('username');
+        $pass = $this->input->post('pass');
+        // dd([$uname,$pass]);
+        $admin = $this->admin->login($uname, $pass);
+        if (empty($admin)) {
+            // Data user tidak ditemukan.
+            flash('errlogin', 'Kombinasi username dan password tidak ditemukan dalam database. Harap periksa kembali data yang anda masukkan.', 'warning');
+            return $this->loadViewAdmin('admin/login');
+        }
+        // dd($admin);
+        // Data user ditemukan, set session & redirect ke site/login
+        $this->session->set_userdata([
+            'id_admin' => $admin['id'],
+            'username_admin' => $admin['username'],
+            'nama_lengkap_admin' => $admin['nama_lengkap'],
+            'role_admin' => $admin['role'],
+        ]);
+
+        $admin_nama = $admin['nama_lengkap'];
+        $this->mlog->baru([
+            'idadmin' => $admin['id'],
+            'keterangan' => "$admin_nama melakukan login"
+        ]);
+        flash('welcome', "Selamat Datang {$admin['nama_lengkap']}! Sudahkah anda mengumpulkan sampah masker hari ini?", 'success');
+
+        // Jika user admin maka langsung diarahkan ke web admin, jika user biasa maka diarahkan ke Home.
+        // $redirect_route = $admin['role'] == 1 ? 'admin/index' : 'site/index';
+        redirect('admin/index');
     }
 
     public function register()
@@ -118,5 +173,12 @@ class Auth extends CI_Controller
         // Kosongkan session, redirect ke halaman login.
         $this->session->unset_userdata(['id', 'username', 'nama_lengkap', 'role']);
         redirect('auth/login');
+    }
+
+    public function logout_admin()
+    {
+        // Kosongkan session, redirect ke halaman login.
+        $this->session->unset_userdata(['id_admin', 'username_admin', 'nama_lengkap_admin', 'role']);
+        redirect('auth/login_admin');
     }
 }

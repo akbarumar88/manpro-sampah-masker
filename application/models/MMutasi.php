@@ -50,4 +50,11 @@ class MMutasi extends CI_Model
 
         return ['data' => $res, 'count' => $resCount['count']];
     }
+
+    public function create($data)
+    {
+        return $this
+            ->db
+            ->insert('mutasi', $data);
+    }
 }
